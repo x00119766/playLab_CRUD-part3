@@ -81,6 +81,28 @@ public class HomeController extends Controller {
         return redirect(controllers.routes.HomeController.products());
     }
 
+    // Update Product by id
+    //called when edit button is pressed
+    @Transactional
+    public Result updateProduct(Long id) {
+        Product p;
+        Form<Product> productForm;
+
+        try {
+            //find the product by id
+            p = Product.find.byId(id);
+
+            //find the product by id
+            productForm = formFactory.form(Product.class).fill(p);
+        } catch (Exception ex) {
+
+            //Display an error message
+            return badRequest("error");
+        }
+        return ok(addProduct.render(productForm));
+
+    }
+
     // Delete Product by id
     public Result deleteProduct(Long id) {
 
