@@ -69,10 +69,17 @@ public class HomeController extends Controller {
 
         // Extract the product from the form object
         Product newProduct = newProductForm.get();
+        // Extract the product from the form object
+        Product p = newProductForm.get();
 
+        if (p.getId() == null) {
         // Save to the database via Ebean (remember Product extends Model)
-        newProduct.save();
-
+        p.save();
+        }
+       //Product already exists so update
+        else if (p.getId() != null) {
+            p.update();
+        }
         // Set a success message in temporary flash
         // for display in return view
         flash("success", "Product " + newProduct.getName() + " has been created");
